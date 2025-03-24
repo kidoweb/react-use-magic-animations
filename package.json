@@ -1,0 +1,49 @@
+{
+  "name": "react-use-magic-animations",
+  "version": "1.0.0",
+  "description": "A collection of easy-to-use React hooks for professional animations based on popular animation libraries",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "animation",
+    "framer-motion",
+    "gsap",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "framer-motion": "^10.16.4",
+    "gsap": "^3.12.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "jest": "^29.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.0",
+    "rollup": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.31.0",
+    "typescript": "^5.0.0"
+  }
+} 

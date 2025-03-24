@@ -3,6 +3,7 @@
 Набор простых в использовании React хуков для профессиональных анимаций, основанных на популярных библиотеках анимаций, таких как framer-motion и GSAP.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/YOUR_USERNAME/react-use-magic-animations/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/react-use-magic-animations/actions/workflows/ci.yml)
 
 ## Возможности
 

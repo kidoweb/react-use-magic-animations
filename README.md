@@ -3,7 +3,9 @@
 Набор простых в использовании React хуков для профессиональных анимаций, основанных на популярных библиотеках анимаций, таких как framer-motion и GSAP.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/YOUR_USERNAME/react-use-magic-animations/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/react-use-magic-animations/actions/workflows/ci.yml)
+[![CI](https://github.com/kidoweb/react-use-magic-animations/actions/workflows/ci.yml/badge.svg)](https://github.com/kidoweb/react-use-magic-animations/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/react-use-magic-animations.svg)](https://www.npmjs.com/package/react-use-magic-animations)
+[![npm downloads](https://img.shields.io/npm/dm/react-use-magic-animations.svg)](https://www.npmjs.com/package/react-use-magic-animations)
 
 ## Возможности
 
@@ -12,6 +14,8 @@
 - 📦 Нет зависимостей (кроме peer dependencies)
 - 🔧 Полностью типизировано с TypeScript
 - 🎯 Простой и интуитивный API
+- 🌟 Поддержка всех современных браузеров
+- 📱 Оптимизировано для мобильных устройств
 
 ## Установка
 
@@ -20,6 +24,12 @@ npm install react-use-magic-animations
 # или
 yarn add react-use-magic-animations
 ```
+
+## Требования
+
+- React 16.8.0 или выше
+- framer-motion 10.0.0 или выше
+- TypeScript 4.0.0 или выше (опционально)
 
 ## Использование
 
@@ -152,21 +162,10 @@ npm test
 npm run lint
 ```
 
+## Поддержка
+
+Если у вас возникли проблемы или есть предложения, пожалуйста, создайте issue в репозитории GitHub.
+
 ## Лицензия
 
-Этот проект распространяется под лицензией MIT - подробности в файле [LICENSE](LICENSE).
-
-# Инициализируйте Git репозиторий
-git init
-
-# Добавьте все файлы в индекс
-git add .
-
-# Создайте первый коммит
-git commit -m "Начальная версия: пакет React Use Magic Animations"
-
-# Добавьте удаленный репозиторий (замените YOUR_USERNAME на ваше имя пользователя GitHub)
-git remote add origin https://github.com/YOUR_USERNAME/react-use-magic-animations.git
-
-# Отправьте код в репозиторий
-git push -u origin main 
+Этот проект распространяется под лицензией MIT - подробности в файле [LICENSE](LICENSE). 

@@ -1,96 +1,99 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+Все значимые изменения в этом проекте будут документироваться в этом файле.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Формат основан на [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/),
+и этот проект придерживается [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.5] - 2024-03-25
+
+### Добавлено
+- Полностью переведена документация на русский язык
+- Улучшена структура README.md
+- Добавлены эмодзи для лучшей читаемости
+- Добавлен раздел поддержки в документацию
+
+### Изменено
+- Обновлен формат документации для лучшей читаемости
+- Улучшены примеры использования
+- Оптимизирована структура документации
 
 ## [1.0.4] - 2024-03-25
 
-### Changed
-- Refactored useFade hook for better type safety and readability
-- Fixed linter warnings
-- Improved code organization
+### Изменено
+- Рефакторинг хука useFade для лучшей типобезопасности и читаемости
+- Исправлены предупреждения линтера
+- Улучшена организация кода
 
 ## [1.0.3] - 2024-03-25
 
-### Added
-- Comprehensive test suite for useFade hook
-- Jest configuration for TypeScript testing
-- Test setup file with necessary mocks
+### Добавлено
+- Полный набор тестов для хука useFade
+- Конфигурация Jest для тестирования TypeScript
+- Файл настройки тестов с необходимыми моками
 
-### Changed
-- Updated package dependencies
-- Improved test coverage
+### Изменено
+- Обновлены зависимости пакета
+- Улучшено покрытие тестами
 
 ## [1.0.2] - 2024-03-25
 
-### Added
-- New `useFade` hook with advanced animation features
-- Comprehensive documentation in English and Russian
-- Detailed examples showcasing various use cases
-- TypeScript support with full type definitions
-- Responsive animations support
-- Stagger effects for multiple elements
-- Custom animation variants
-- Different settings for fade in/out
-- Direction-based animations
+### Добавлено
+- Новый хук `useFade` с продвинутыми возможностями анимации
+- Подробная документация на английском и русском языках
+- Детальные примеры использования
+- Поддержка TypeScript с полными определениями типов
+- Поддержка адаптивных анимаций
+- Эффекты stagger для множества элементов
+- Кастомные варианты анимации
+- Разные настройки для появления/исчезновения
+- Анимации по направлению
 
-### Features
-- Fade in/out animations with customizable duration and opacity
-- Direction-based animations (up, down, left, right)
-- Stagger effects for multiple elements
-- Responsive animations based on device type
-- Custom animation variants
-- Different settings for fade in and fade out
-- Smooth transitions with customizable easing
-- TypeScript support with full type definitions
-- Comprehensive documentation and examples
+### Изменено
+- Обновлена структура пакета
+- Улучшена документация
+- Улучшены определения типов
+- Добавлены подробные примеры
+- Обновлены зависимости
 
-### Changed
-- Updated package structure
-- Enhanced documentation
-- Improved type definitions
-- Added comprehensive examples
-- Updated dependencies
-
-### Fixed
-- TypeScript type definitions
-- Documentation formatting
-- Example code structure
+### Исправлено
+- Определения типов TypeScript
+- Форматирование документации
+- Структура примеров кода
 
 ## [1.0.1] - 2024-03-25
 
-### Added
-- Initial package setup
-- Basic project structure
-- TypeScript configuration
-- ESLint configuration
-- Jest configuration
-- Basic documentation
+### Добавлено
+- Начальная настройка пакета
+- Базовая структура проекта
+- Конфигурация TypeScript
+- Конфигурация ESLint
+- Конфигурация Jest
+- Базовая документация
 
-### Changed
-- Updated package.json with necessary dependencies
-- Added development scripts
-- Improved project structure
+### Изменено
+- Обновлен package.json с необходимыми зависимостями
+- Добавлены скрипты разработки
+- Улучшена структура проекта
 
-### Fixed
-- Initial setup issues
-- Configuration files
-- Documentation structure
+### Исправлено
+- Проблемы начальной настройки
+- Конфигурационные файлы
+- Структура документации
 
 ## [1.0.0] - 2024-03-25
 
-### Added
-- Initial release
-- Basic project structure
-- README.md with project description
-- License file
-- Git configuration
-- Package.json with basic configuration
+### Добавлено
+- Первый релиз
+- Базовая структура проекта
+- README.md с описанием проекта
+- Файл лицензии
+- Конфигурация Git
+- package.json с базовой конфигурацией
 
-[1.0.4]: https://github.com/yourusername/react-use-magic-animations/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/yourusername/react-use-magic-animations/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/yourusername/react-use-magic-animations/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/yourusername/react-use-magic-animations/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/yourusername/react-use-magic-animations/releases/tag/v1.0.0 
+[1.0.5]: https://github.com/kidoweb/react-use-magic-animations/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/kidoweb/react-use-magic-animations/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/kidoweb/react-use-magic-animations/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/kidoweb/react-use-magic-animations/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/kidoweb/react-use-magic-animations/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/kidoweb/react-use-magic-animations/releases/tag/v1.0.0 

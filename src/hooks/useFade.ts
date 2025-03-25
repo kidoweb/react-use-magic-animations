@@ -1,131 +1,117 @@
-import { useAnimation, Variants } from 'framer-motion';
+import { AnimationControls, useAnimation } from 'framer-motion';
+import { useCallback, useEffect } from 'react';
 
-interface FadeTransition {
-  duration?: number;
-  delay?: number;
-  ease?: string;
-  stagger?: number;
-  staggerChildren?: number;
-}
-
-interface FadeVariant {
-  opacity: number;
-  x?: number;
-  y?: number;
-  transition?: FadeTransition;
-}
-
-interface FadeVariants {
-  hidden: FadeVariant;
-  visible: FadeVariant;
-  exit: FadeVariant;
-}
-
-interface ResponsiveOptions {
-  mobile?: { duration: number };
-  tablet?: { duration: number };
-  desktop?: { duration: number };
-}
-
-interface StaggerOptions {
-  each: number;
-  from: number;
-}
-
-interface FadeSettings {
+export interface FadeOptions {
   duration?: number;
   delay?: number;
   ease?: string;
   opacity?: number;
-}
-
-interface FadeOptions {
-  initialOpacity?: number;
-  finalOpacity?: number;
-  variants?: Partial<FadeVariants>;
-  responsive?: ResponsiveOptions;
-  stagger?: StaggerOptions;
   direction?: 'up' | 'down' | 'left' | 'right';
   distance?: number;
-  fadeIn?: FadeSettings;
-  fadeOut?: FadeSettings;
+  stagger?: number;
+  responsive?: {
+    mobile?: Partial<FadeOptions>;
+    tablet?: Partial<FadeOptions>;
+    desktop?: Partial<FadeOptions>;
+  };
+  customVariants?: {
+    hidden?: Record<string, any>;
+    visible?: Record<string, any>;
+    exit?: Record<string, any>;
+  };
+  fadeIn?: Partial<FadeOptions>;
+  fadeOut?: Partial<FadeOptions>;
 }
 
-export const useFade = (options: FadeOptions = {}) => {
-  const {
-    initialOpacity = 0,
-    finalOpacity = 1,
-    variants: customVariants,
-    responsive,
-    stagger,
-    direction,
-    distance = 50,
-    fadeIn,
-    fadeOut,
-  } = options;
+export interface UseFadeResult {
+  controls: AnimationControls;
+  fadeIn: () => Promise<void>;
+  fadeOut: () => Promise<void>;
+  stop: () => void;
+}
 
-  if (initialOpacity < 0 || initialOpacity > 1) {
-    throw new Error('Initial opacity must be between 0 and 1');
-  }
-
-  if (finalOpacity < 0 || finalOpacity > 1) {
-    throw new Error('Final opacity must be between 0 and 1');
-  }
-
-  const getDirectionOffset = () => {
-    switch (direction) {
-      case 'up':
-        return { y: distance };
-      case 'down':
-        return { y: -distance };
-      case 'left':
-        return { x: distance };
-      case 'right':
-        return { x: -distance };
-      default:
-        return {};
-    }
-  };
-
-  const defaultVariants: FadeVariants = {
-    hidden: {
-      opacity: initialOpacity,
-      ...getDirectionOffset(),
-      transition: {
-        duration: fadeOut?.duration || 0.3,
-        delay: fadeOut?.delay || 0,
-        ease: fadeOut?.ease || 'easeIn',
-      },
-    },
-    visible: {
-      opacity: finalOpacity,
-      x: 0,
-      y: 0,
-      transition: {
-        duration: fadeIn?.duration || 0.3,
-        delay: fadeIn?.delay || 0,
-        ease: fadeIn?.ease || 'easeOut',
-        ...(stagger && {
-          stagger: stagger.each,
-          staggerChildren: stagger.from,
-        }),
-      },
-    },
-    exit: {
-      opacity: fadeOut?.opacity || 0,
-      ...getDirectionOffset(),
-      transition: {
-        duration: fadeOut?.duration || 0.3,
-        delay: fadeOut?.delay || 0,
-        ease: fadeOut?.ease || 'easeIn',
-      },
-    },
-  };
-
+export function useFade(options: FadeOptions = {}): UseFadeResult {
   const controls = useAnimation();
 
-  return {
-    variants: customVariants || defaultVariants,
-    controls,
-  };
-}; 
+  const {
+    duration = 0.5,
+    delay = 0,
+    ease = 'easeInOut',
+    opacity = 0,
+    direction,
+    distance = 50,
+    stagger = 0.1,
+    customVariants,
+    fadeIn: fadeInOptions,
+    fadeOut: fadeOutOptions
+  } = options;
+
+  useEffect(() => {
+    if (duration < 0) {
+      throw new Error('Duration must be a positive number');
+    }
+    if (opacity < 0 || opacity > 1) {
+      throw new Error('Opacity must be between 0 and 1');
+    }
+  }, [duration, opacity]);
+
+  const getDirectionalTransform = useCallback(() => {
+    if (!direction) return {};
+    const transforms: Record<string, number> = {};
+    switch (direction) {
+      case 'up':
+        transforms.y = distance;
+        break;
+      case 'down':
+        transforms.y = -distance;
+        break;
+      case 'left':
+        transforms.x = distance;
+        break;
+      case 'right':
+        transforms.x = -distance;
+        break;
+    }
+    return transforms;
+  }, [direction, distance]);
+
+  const fadeIn = useCallback(async () => {
+    const fadeInDuration = fadeInOptions?.duration ?? duration;
+    const fadeInDelay = fadeInOptions?.delay ?? delay;
+    const fadeInEase = fadeInOptions?.ease ?? ease;
+
+    await controls.start({
+      opacity: 1,
+      ...getDirectionalTransform(),
+      transition: {
+        duration: fadeInDuration,
+        delay: fadeInDelay,
+        ease: fadeInEase,
+        stagger: stagger
+      }
+    });
+  }, [controls, duration, delay, ease, stagger, fadeInOptions, getDirectionalTransform]);
+
+  const fadeOut = useCallback(async () => {
+    const fadeOutDuration = fadeOutOptions?.duration ?? duration;
+    const fadeOutDelay = fadeOutOptions?.delay ?? delay;
+    const fadeOutEase = fadeOutOptions?.ease ?? ease;
+
+    await controls.start({
+      opacity: opacity,
+      ...getDirectionalTransform(),
+      transition: {
+        duration: fadeOutDuration,
+        delay: fadeOutDelay,
+        ease: fadeOutEase,
+        stagger: stagger
+      }
+    });
+  }, [controls, duration, delay, ease, opacity, stagger, fadeOutOptions, getDirectionalTransform]);
+
+  const stop = useCallback(() => {
+    controls.stop();
+  }, [controls]);
+
+  return { controls, fadeIn, fadeOut, stop };
+} 

@@ -1,6 +1,6 @@
 {
   "name": "react-use-magic-animations",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A collection of easy-to-use React hooks for professional animations based on popular animation libraries",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

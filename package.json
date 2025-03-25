@@ -1,6 +1,6 @@
 {
   "name": "react-use-magic-animations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A collection of easy-to-use React hooks for professional animations based on popular animation libraries",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -20,10 +20,24 @@
     "animation",
     "framer-motion",
     "gsap",
-    "typescript"
+    "typescript",
+    "react-hooks",
+    "ui",
+    "animations",
+    "fade",
+    "slide",
+    "scale"
   ],
-  "author": "",
+  "author": "Vadim Kidov",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kidoweb/react-use-magic-animations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kidoweb/react-use-magic-animations/issues"
+  },
+  "homepage": "https://github.com/kidoweb/react-use-magic-animations#readme",
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

@@ -1,34 +1,43 @@
-# Журнал изменений
+# Changelog
 
-Все значимые изменения в этом проекте будут документироваться в этом файле.
+All notable changes to this project will be documented in this file.
 
-Формат основан на [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-и этот проект следует [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] - 2024-03-21
+## [1.0.2] - 2024-03-19
 
-### Добавлено
-- Валидация входных параметров для анимаций
-- Обработка ошибок для функций анимации
-- Оптимизация производительности с использованием useCallback
-- Очистка при размонтировании компонента
-- Файл CHANGELOG.md
+### Added
+- Added comprehensive test suite for `useFade` hook
+- Added new examples in documentation
+- Added TypeScript type definitions
+- Added support for custom variants
+- Added support for responsive animations
+- Added support for stagger effects
+- Added support for directional animations
+- Added support for manual animation control
 
-### Изменено
-- Улучшена типобезопасность TypeScript
-- Улучшены сообщения об ошибках для неверных параметров
-- Оптимизирована производительность анимаций
+### Changed
+- Refactored `useFade` hook to use Framer Motion's animation controls
+- Updated documentation with new API and examples
+- Improved type safety and error handling
+- Simplified API for better developer experience
 
-### Исправлено
-- Потенциальные утечки памяти в контроллерах анимации
-- Граничные случаи с некорректными значениями прозрачности
+### Fixed
+- Fixed type errors in `useFade` hook
+- Fixed issues with animation variants
+- Fixed documentation examples
 
-## [1.0.0] - 2024-03-20
+## [1.0.1] - 2024-03-18
 
-### Добавлено
-- Первый релиз
-- Хук useFade для анимаций появления/исчезновения
-- Хук useSlide для анимаций скольжения
-- Хук useScale для анимаций масштабирования
-- Поддержка TypeScript
-- Подробная документация 
+### Added
+- Initial implementation of `useFade` hook
+- Basic documentation
+- Basic examples
+
+## [1.0.0] - 2024-03-17
+
+### Added
+- Initial release
+- Project setup
+- Basic project structure 

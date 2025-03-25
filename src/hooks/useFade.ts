@@ -1,90 +1,131 @@
-import { useAnimation } from 'framer-motion';
-import { useEffect, useCallback } from 'react';
+import { useAnimation, Variants } from 'framer-motion';
 
-// Интерфейс для параметров анимации появления/исчезновения
-interface FadeOptions {
-  duration?: number;    // Длительность анимации в секундах
-  delay?: number;       // Задержка перед началом анимации
-  initialOpacity?: number;  // Начальное значение прозрачности
-  finalOpacity?: number;    // Конечное значение прозрачности
+interface FadeTransition {
+  duration?: number;
+  delay?: number;
+  ease?: string;
+  stagger?: number;
+  staggerChildren?: number;
 }
 
-// Валидация параметров
-const validateOptions = (options: FadeOptions): void => {
-  if (options.duration !== undefined && options.duration < 0) {
-    throw new Error('Duration must be a positive number');
-  }
-  if (options.delay !== undefined && options.delay < 0) {
-    throw new Error('Delay must be a positive number');
-  }
-  if (options.initialOpacity !== undefined && (options.initialOpacity < 0 || options.initialOpacity > 1)) {
-    throw new Error('Initial opacity must be between 0 and 1');
-  }
-  if (options.finalOpacity !== undefined && (options.finalOpacity < 0 || options.finalOpacity > 1)) {
-    throw new Error('Final opacity must be between 0 and 1');
-  }
-};
+interface FadeVariant {
+  opacity: number;
+  x?: number;
+  y?: number;
+  transition?: FadeTransition;
+}
+
+interface FadeVariants {
+  hidden: FadeVariant;
+  visible: FadeVariant;
+  exit: FadeVariant;
+}
+
+interface ResponsiveOptions {
+  mobile?: { duration: number };
+  tablet?: { duration: number };
+  desktop?: { duration: number };
+}
+
+interface StaggerOptions {
+  each: number;
+  from: number;
+}
+
+interface FadeSettings {
+  duration?: number;
+  delay?: number;
+  ease?: string;
+  opacity?: number;
+}
+
+interface FadeOptions {
+  initialOpacity?: number;
+  finalOpacity?: number;
+  variants?: Partial<FadeVariants>;
+  responsive?: ResponsiveOptions;
+  stagger?: StaggerOptions;
+  direction?: 'up' | 'down' | 'left' | 'right';
+  distance?: number;
+  fadeIn?: FadeSettings;
+  fadeOut?: FadeSettings;
+}
 
 export const useFade = (options: FadeOptions = {}) => {
-  // Валидация параметров при инициализации
-  validateOptions(options);
-
   const {
-    duration = 0.5,     // Значение по умолчанию для длительности
-    delay = 0,          // Значение по умолчанию для задержки
-    initialOpacity = 0, // Значение по умолчанию для начальной прозрачности
-    finalOpacity = 1,   // Значение по умолчанию для конечной прозрачности
+    initialOpacity = 0,
+    finalOpacity = 1,
+    variants: customVariants,
+    responsive,
+    stagger,
+    direction,
+    distance = 50,
+    fadeIn,
+    fadeOut,
   } = options;
+
+  if (initialOpacity < 0 || initialOpacity > 1) {
+    throw new Error('Initial opacity must be between 0 and 1');
+  }
+
+  if (finalOpacity < 0 || finalOpacity > 1) {
+    throw new Error('Final opacity must be between 0 and 1');
+  }
+
+  const getDirectionOffset = () => {
+    switch (direction) {
+      case 'up':
+        return { y: distance };
+      case 'down':
+        return { y: -distance };
+      case 'left':
+        return { x: distance };
+      case 'right':
+        return { x: -distance };
+      default:
+        return {};
+    }
+  };
+
+  const defaultVariants: FadeVariants = {
+    hidden: {
+      opacity: initialOpacity,
+      ...getDirectionOffset(),
+      transition: {
+        duration: fadeOut?.duration || 0.3,
+        delay: fadeOut?.delay || 0,
+        ease: fadeOut?.ease || 'easeIn',
+      },
+    },
+    visible: {
+      opacity: finalOpacity,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: fadeIn?.duration || 0.3,
+        delay: fadeIn?.delay || 0,
+        ease: fadeIn?.ease || 'easeOut',
+        ...(stagger && {
+          stagger: stagger.each,
+          staggerChildren: stagger.from,
+        }),
+      },
+    },
+    exit: {
+      opacity: fadeOut?.opacity || 0,
+      ...getDirectionOffset(),
+      transition: {
+        duration: fadeOut?.duration || 0.3,
+        delay: fadeOut?.delay || 0,
+        ease: fadeOut?.ease || 'easeIn',
+      },
+    },
+  };
 
   const controls = useAnimation();
 
-  // Оптимизированные функции анимации с useCallback
-  const fadeIn = useCallback(async () => {
-    try {
-      await controls.start({
-        opacity: finalOpacity,
-        transition: {
-          duration,
-          delay,
-          ease: 'easeInOut', // Плавное ускорение и замедление
-        },
-      });
-    } catch (error) {
-      console.error('Error during fadeIn animation:', error);
-    }
-  }, [controls, finalOpacity, duration, delay]);
-
-  const fadeOut = useCallback(async () => {
-    try {
-      await controls.start({
-        opacity: initialOpacity,
-        transition: {
-          duration,
-          delay,
-          ease: 'easeInOut', // Плавное ускорение и замедление
-        },
-      });
-    } catch (error) {
-      console.error('Error during fadeOut animation:', error);
-    }
-  }, [controls, initialOpacity, duration, delay]);
-
-  // Установка начального состояния и очистка
-  useEffect(() => {
-    controls.set({ opacity: initialOpacity });
-
-    // Очистка при размонтировании
-    return () => {
-      controls.stop();
-    };
-  }, [controls, initialOpacity]);
-
   return {
-    controls,    // Контроллеры анимации для framer-motion
-    fadeIn,      // Функция для анимации появления
-    fadeOut,     // Функция для анимации исчезновения
-    style: {     // Начальные стили
-      opacity: initialOpacity,
-    },
+    variants: customVariants || defaultVariants,
+    controls,
   };
 }; 

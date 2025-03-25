@@ -1,31 +1,191 @@
 # React Use Magic Animations
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/kidoweb/react-use-magic-animations/actions/workflows/ci.yml/badge.svg)](https://github.com/kidoweb/react-use-magic-animations/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/react-use-magic-animations.svg)](https://www.npmjs.com/package/react-use-magic-animations)
-[![npm downloads](https://img.shields.io/npm/dm/react-use-magic-animations.svg)](https://www.npmjs.com/package/react-use-magic-animations)
-[![GitHub license](https://img.shields.io/github/license/kidoweb/react-use-magic-animations.svg)](https://github.com/kidoweb/react-use-magic-animations/blob/main/LICENSE)
+[English](#english) | [Русский](#russian)
 
-Набор React хуков для создания красивых анимаций с использованием framer-motion.
+## English
 
-## 📚 [Подробная документация](docs/README.md)
+A collection of React hooks for creating beautiful animations with Framer Motion.
 
-## Возможности
+### Features
 
-- 🎨 Простые в использовании хуки для анимаций
-- ⚡ Построено на основе framer-motion
-- 📦 Нет зависимостей (кроме peer dependencies)
-- 🔧 Полностью типизировано с TypeScript
-- 🎯 Простой и интуитивный API
-- 🌟 Поддержка всех современных браузеров
-- 📱 Оптимизировано для мобильных устройств
+- 🎨 Smooth and professional animations
+- 🚀 Optimized performance with React hooks
+- 📱 Responsive animations for all devices
+- 🎯 TypeScript support
+- 🔧 Highly customizable
+- 📦 Zero dependencies (except React)
 
-## Что нового
-- Добавлен хук useFade для анимаций появления/исчезновения
-- Добавлен хук useSlide для анимаций скольжения
-- Добавлен хук useScale для анимаций масштабирования
+### Installation
 
-## Установка
+```bash
+npm install react-use-magic-animations
+# or
+yarn add react-use-magic-animations
+```
+
+### Quick Start
+
+```tsx
+import { useFade } from 'react-use-magic-animations';
+import { motion } from 'framer-motion';
+
+const MyComponent = () => {
+  const { variants, controls } = useFade({
+    initialOpacity: 0,
+    finalOpacity: 1,
+    fadeIn: {
+      duration: 0.3,
+      delay: 0.1,
+      ease: 'easeOut',
+    },
+    fadeOut: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: 'easeIn',
+      opacity: 0.2,
+    },
+  });
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
+    </motion.div>
+  );
+};
+```
+
+### Available Hooks
+
+#### useFade
+
+The `useFade` hook provides a simple way to add fade animations to your components.
+
+```tsx
+import { useFade } from 'react-use-magic-animations';
+import { motion } from 'framer-motion';
+
+const MyComponent = () => {
+  const { variants, controls } = useFade({
+    initialOpacity: 0,
+    finalOpacity: 1,
+    fadeIn: {
+      duration: 0.3,
+      delay: 0.1,
+      ease: 'easeOut',
+    },
+    fadeOut: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: 'easeIn',
+      opacity: 0.2,
+    },
+  });
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
+    </motion.div>
+  );
+};
+```
+
+#### Options
+
+The `useFade` hook accepts the following options:
+
+- `initialOpacity` (number, default: 0): Initial opacity value
+- `finalOpacity` (number, default: 1): Final opacity value
+- `variants` (object): Custom animation variants
+- `responsive` (object): Responsive animation settings
+  - `mobile` (object): Settings for mobile devices
+  - `tablet` (object): Settings for tablet devices
+  - `desktop` (object): Settings for desktop devices
+- `stagger` (object): Stagger animation settings
+  - `each` (number): Delay between each child animation
+  - `from` (number): Starting point for stagger effect
+- `direction` ('up' | 'down' | 'left' | 'right'): Direction of the fade animation
+- `distance` (number, default: 50): Distance to move during the animation
+- `fadeIn` (object): Settings for fade in animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
+- `fadeOut` (object): Settings for fade out animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
+
+#### Returns
+
+The hook returns an object with:
+
+- `variants`: Animation variants for Framer Motion
+- `controls`: Animation controls for manual animation control
+
+### API Reference
+
+#### useFade Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| duration | number | 0.5 | Animation duration in seconds |
+| delay | number | 0 | Delay before animation starts |
+| initialOpacity | number | 0 | Initial opacity value |
+| finalOpacity | number | 1 | Final opacity value |
+| ease | string | 'easeInOut' | Animation easing function |
+| repeat | number | - | Number of animation repetitions |
+| repeatDelay | number | - | Delay between repetitions |
+| onComplete | () => void | - | Callback after animation completes |
+| fadeInDuration | number | - | Separate duration for fade in |
+| fadeOutDuration | number | - | Separate duration for fade out |
+| fadeInDelay | number | - | Separate delay for fade in |
+| fadeOutDelay | number | - | Separate delay for fade out |
+| fadeInEase | string | - | Separate easing for fade in |
+| fadeOutEase | string | - | Separate easing for fade out |
+| fadeInOpacity | number | - | Separate opacity for fade in |
+| fadeOutOpacity | number | - | Separate opacity for fade out |
+| stagger | number | - | Delay between child animations |
+| staggerChildren | number | - | Number of child elements for stagger |
+| direction | 'up' \| 'down' \| 'left' \| 'right' | - | Animation direction |
+| distance | number | 20 | Distance for directional animation |
+| variants | object | - | Custom animation variants |
+| responsive | object | - | Responsive animation options |
+
+### Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+### License
+
+MIT
+
+---
+
+## Russian
+
+Коллекция простых в использовании React хуков для профессиональных анимаций на основе популярных библиотек анимаций.
+
+### Возможности
+
+- 🎨 Плавные и профессиональные анимации
+- 🚀 Оптимизированная производительность с React хуками
+- 📱 Адаптивные анимации для всех устройств
+- 🎯 Поддержка TypeScript
+- 🔧 Высокая настраиваемость
+- 📦 Нет зависимостей (кроме React)
+
+### Установка
 
 ```bash
 npm install react-use-magic-animations
@@ -33,75 +193,380 @@ npm install react-use-magic-animations
 yarn add react-use-magic-animations
 ```
 
-## Требования
-
-- React 16.8.0 или выше
-- framer-motion 10.0.0 или выше
-- TypeScript 4.0.0 или выше (опционально)
-
-## Быстрый старт
+### Быстрый старт
 
 ```tsx
 import { useFade } from 'react-use-magic-animations';
 import { motion } from 'framer-motion';
 
-function MyComponent() {
-  const { controls, fadeIn, fadeOut } = useFade();
+const MyComponent = () => {
+  const { variants, controls } = useFade({
+    initialOpacity: 0,
+    finalOpacity: 1,
+    fadeIn: {
+      duration: 0.3,
+      delay: 0.1,
+      ease: 'easeOut',
+    },
+    fadeOut: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: 'easeIn',
+      opacity: 0.2,
+    },
+  });
 
   return (
-    <motion.div animate={controls}>
-      <button onClick={fadeIn}>Появиться</button>
-      <button onClick={fadeOut}>Исчезнуть</button>
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
     </motion.div>
   );
-}
+};
 ```
 
-## Доступные хуки
+### Доступные хуки
 
-- `useFade` - анимации появления и исчезновения
-- `useSlide` - анимации скольжения в любом направлении
-- `useScale` - анимации масштабирования
+#### useFade
 
-## Особенности
+Хук для создания анимаций появления/исчезновения с различными эффектами.
 
-- 🎨 Простой и интуитивный API
-- ⚡️ Оптимизированная производительность
-- 📱 Поддержка мобильных устройств
-- 🌐 Кросс-браузерная совместимость
-- 📦 Легкий вес
-- 🔧 Полностью настраиваемые анимации
+```tsx
+import { useFade } from 'react-use-magic-animations';
+import { motion } from 'framer-motion';
 
-## Как внести свой вклад
+const MyComponent = () => {
+  const { variants, controls } = useFade({
+    initialOpacity: 0,
+    finalOpacity: 1,
+    fadeIn: {
+      duration: 0.3,
+      delay: 0.1,
+      ease: 'easeOut',
+    },
+    fadeOut: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: 'easeIn',
+      opacity: 0.2,
+    },
+  });
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
+    </motion.div>
+  );
+};
+```
+
+#### Options
+
+The `useFade` hook accepts the following options:
+
+- `initialOpacity` (number, default: 0): Initial opacity value
+- `finalOpacity` (number, default: 1): Final opacity value
+- `variants` (object): Custom animation variants
+- `responsive` (object): Responsive animation settings
+  - `mobile` (object): Settings for mobile devices
+  - `tablet` (object): Settings for tablet devices
+  - `desktop` (object): Settings for desktop devices
+- `stagger` (object): Stagger animation settings
+  - `each` (number): Delay between each child animation
+  - `from` (number): Starting point for stagger effect
+- `direction` ('up' | 'down' | 'left' | 'right'): Direction of the fade animation
+- `distance` (number, default: 50): Distance to move during the animation
+- `fadeIn` (object): Settings for fade in animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
+- `fadeOut` (object): Settings for fade out animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
+
+#### Returns
+
+The hook returns an object with:
+
+- `variants`: Animation variants for Framer Motion
+- `controls`: Animation controls for manual animation control
+
+### Справочник API
+
+#### Опции useFade
+
+| Опция | Тип | По умолчанию | Описание |
+|--------|------|---------|-------------|
+| duration | number | 0.5 | Длительность анимации в секундах |
+| delay | number | 0 | Задержка перед началом анимации |
+| initialOpacity | number | 0 | Начальное значение прозрачности |
+| finalOpacity | number | 1 | Конечное значение прозрачности |
+| ease | string | 'easeInOut' | Функция плавности анимации |
+| repeat | number | - | Количество повторений анимации |
+| repeatDelay | number | - | Задержка между повторениями |
+| onComplete | () => void | - | Callback после завершения анимации |
+| fadeInDuration | number | - | Отдельная длительность для появления |
+| fadeOutDuration | number | - | Отдельная длительность для исчезновения |
+| fadeInDelay | number | - | Отдельная задержка для появления |
+| fadeOutDelay | number | - | Отдельная задержка для исчезновения |
+| fadeInEase | string | - | Отдельная плавность для появления |
+| fadeOutEase | string | - | Отдельная плавность для исчезновения |
+| fadeInOpacity | number | - | Отдельная прозрачность для появления |
+| fadeOutOpacity | number | - | Отдельная прозрачность для исчезновения |
+| stagger | number | - | Задержка между анимациями дочерних элементов |
+| staggerChildren | number | - | Количество дочерних элементов для stagger эффекта |
+| direction | 'up' \| 'down' \| 'left' \| 'right' | - | Направление анимации |
+| distance | number | 20 | Расстояние для анимации по направлению |
+| variants | object | - | Кастомные варианты анимации |
+| responsive | object | - | Адаптивные настройки анимации |
+
+### Участие в разработке
 
 Мы приветствуем ваш вклад! Пожалуйста, не стесняйтесь отправлять Pull Request.
 
-1. Сделайте форк репозитория
-2. Создайте ветку для вашей функции (`git checkout -b feature/amazing-feature`)
-3. Зафиксируйте изменения (`git commit -m 'Добавлена новая функция'`)
-4. Отправьте изменения в ветку (`git push origin feature/amazing-feature`)
-5. Откройте Pull Request
+### Лицензия
 
-## Разработка
+MIT
 
-```bash
-# Установка зависимостей
-npm install
+## Usage
 
-# Сборка пакета
-npm run build
+### useFade
 
-# Запуск тестов
-npm test
+The `useFade` hook provides a simple way to add fade animations to your components.
 
-# Проверка кода линтером
-npm run lint
+```tsx
+import { useFade } from 'react-use-magic-animations';
+import { motion } from 'framer-motion';
+
+const MyComponent = () => {
+  const { variants, controls } = useFade({
+    initialOpacity: 0,
+    finalOpacity: 1,
+    fadeIn: {
+      duration: 0.3,
+      delay: 0.1,
+      ease: 'easeOut',
+    },
+    fadeOut: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: 'easeIn',
+      opacity: 0.2,
+    },
+  });
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
+    </motion.div>
+  );
+};
 ```
 
-## Поддержка
+#### Options
 
-Если у вас возникли проблемы или есть предложения, пожалуйста, создайте issue в [GitHub](https://github.com/kidoweb/react-use-magic-animations/issues).
+The `useFade` hook accepts the following options:
 
-## Лицензия
+- `initialOpacity` (number, default: 0): Initial opacity value
+- `finalOpacity` (number, default: 1): Final opacity value
+- `variants` (object): Custom animation variants
+- `responsive` (object): Responsive animation settings
+  - `mobile` (object): Settings for mobile devices
+  - `tablet` (object): Settings for tablet devices
+  - `desktop` (object): Settings for desktop devices
+- `stagger` (object): Stagger animation settings
+  - `each` (number): Delay between each child animation
+  - `from` (number): Starting point for stagger effect
+- `direction` ('up' | 'down' | 'left' | 'right'): Direction of the fade animation
+- `distance` (number, default: 50): Distance to move during the animation
+- `fadeIn` (object): Settings for fade in animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
+- `fadeOut` (object): Settings for fade out animation
+  - `duration` (number): Animation duration in seconds
+  - `delay` (number): Delay before animation starts
+  - `ease` (string): Easing function
+  - `opacity` (number): Target opacity value
 
-Этот проект распространяется под лицензией MIT - подробности в файле [LICENSE](LICENSE). 
+#### Returns
+
+The hook returns an object with:
+
+- `variants`: Animation variants for Framer Motion
+- `controls`: Animation controls for manual animation control
+
+## Examples
+
+### Basic Fade
+
+```tsx
+const { variants, controls } = useFade();
+
+return (
+  <motion.div
+    initial="hidden"
+    animate={controls}
+    exit="exit"
+    variants={variants}
+  >
+    Content
+  </motion.div>
+);
+```
+
+### Directional Fade
+
+```tsx
+const { variants, controls } = useFade({
+  direction: 'up',
+  distance: 50,
+});
+
+return (
+  <motion.div
+    initial="hidden"
+    animate={controls}
+    exit="exit"
+    variants={variants}
+  >
+    Content
+  </motion.div>
+);
+```
+
+### Staggered Children
+
+```tsx
+const { variants, controls } = useFade({
+  stagger: {
+    each: 0.1,
+    from: 0,
+  },
+});
+
+return (
+  <motion.div
+    initial="hidden"
+    animate={controls}
+    exit="exit"
+    variants={variants}
+  >
+    {items.map((item) => (
+      <motion.div key={item.id} variants={variants}>
+        {item.content}
+      </motion.div>
+    ))}
+  </motion.div>
+);
+```
+
+### Responsive Animation
+
+```tsx
+const { variants, controls } = useFade({
+  responsive: {
+    mobile: { duration: 0.2 },
+    tablet: { duration: 0.3 },
+    desktop: { duration: 0.4 },
+  },
+});
+
+return (
+  <motion.div
+    initial="hidden"
+    animate={controls}
+    exit="exit"
+    variants={variants}
+  >
+    Content
+  </motion.div>
+);
+```
+
+### Custom Variants
+
+```tsx
+const { variants, controls } = useFade({
+  variants: {
+    hidden: {
+      opacity: 0,
+      y: 100,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -100,
+    },
+  },
+});
+
+return (
+  <motion.div
+    initial="hidden"
+    animate={controls}
+    exit="exit"
+    variants={variants}
+  >
+    Content
+  </motion.div>
+);
+```
+
+### Manual Control
+
+```tsx
+const { variants, controls } = useFade();
+
+const handleFadeIn = () => {
+  controls.start('visible');
+};
+
+const handleFadeOut = () => {
+  controls.start('hidden');
+};
+
+return (
+  <>
+    <motion.div
+      initial="hidden"
+      animate={controls}
+      exit="exit"
+      variants={variants}
+    >
+      Content
+    </motion.div>
+    <button onClick={handleFadeIn}>Fade In</button>
+    <button onClick={handleFadeOut}>Fade Out</button>
+  </>
+);
+```
+
+## License
+
+MIT 

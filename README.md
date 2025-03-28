@@ -34,37 +34,24 @@ yarn add react-use-magic-animations
 ## 🚀 Quick Start
 
 ```tsx
-import { useFade } from 'react-use-magic-animations';
+import { useFade, useSpring } from 'react-use-magic-animations';
 import { motion } from 'framer-motion';
 
-const MyComponent = () => {
-  const { variants, controls } = useFade({
-    initialOpacity: 0,
-    finalOpacity: 1,
-    fadeIn: {
-      duration: 0.3,
-      delay: 0.1,
-      ease: 'easeOut',
-    },
-    fadeOut: {
-      duration: 0.7,
-      delay: 0.3,
-      ease: 'easeIn',
-      opacity: 0.2,
-    },
-  });
+function App() {
+  const { fadeIn, fadeOut } = useFade();
+  const { spring, controls } = useSpring();
 
   return (
     <motion.div
-      initial="hidden"
       animate={controls}
-      exit="exit"
-      variants={variants}
+      style={{ scale: spring }}
+      onClick={() => spring(1.5)}
     >
-      Content
+      <button onClick={fadeIn}>Показать</button>
+      <button onClick={fadeOut}>Скрыть</button>
     </motion.div>
   );
-};
+}
 ```
 
 ## 📚 Available Hooks
@@ -184,6 +171,53 @@ The hook returns an object with the following properties:
 - `fadeOut`: Function to trigger fade out animation
 - `stop`: Function to stop current animation
 
+### useSpring
+
+A hook for creating spring animations with customizable parameters.
+
+#### Usage Examples
+
+```tsx
+const { spring, controls, stop } = useSpring({
+  stiffness: 100,
+  damping: 10,
+  mass: 1
+});
+
+return (
+  <motion.div animate={controls}>
+    <button onClick={() => spring(1.5)}>Увеличить</button>
+    <button onClick={() => spring(0.5)}>Уменьшить</button>
+    <button onClick={stop}>Остановить</button>
+  </motion.div>
+);
+```
+
+#### Hook Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| stiffness | number | 100 | Spring stiffness |
+| damping | number | 10 | Damping |
+| mass | number | 1 | Mass |
+| velocity | number | 0 | Initial velocity |
+| restDelta | number | 0.01 | Rest stop distance threshold |
+| restSpeed | number | 0.01 | Rest stop speed threshold |
+| bounce | number | 0.25 | Bounce coefficient |
+| tension | number | 300 | Tension |
+| friction | number | 30 | Friction |
+| velocityThreshold | number | 0.001 | Velocity threshold |
+| distanceThreshold | number | 0.001 | Distance threshold |
+
+#### Return Values
+
+The hook returns an object with the following properties:
+
+- `spring`: Function to animate to a target value
+- `stop`: Function to stop the animation
+- `controls`: Animation controls for manual management
+- `value`: Current animation value
+
 ## 🤝 Contributing
 
 We welcome your contributions! Please feel free to submit a Pull Request.
@@ -234,164 +268,115 @@ yarn add react-use-magic-animations
 ## 🚀 Быстрый старт
 
 ```tsx
-import { useFade } from 'react-use-magic-animations';
-import { motion } from 'framer-motion';
+import { useFade, useSpring } from 'react-use-magic-animations';
 
-const MyComponent = () => {
-  const { variants, controls } = useFade({
-    initialOpacity: 0,
-    finalOpacity: 1,
-    fadeIn: {
-      duration: 0.3,
-      delay: 0.1,
-      ease: 'easeOut',
-    },
-    fadeOut: {
-      duration: 0.7,
-      delay: 0.3,
-      ease: 'easeIn',
-      opacity: 0.2,
-    },
-  });
+function App() {
+  const { fadeIn, fadeOut } = useFade();
+  const { spring, controls } = useSpring();
 
   return (
     <motion.div
-      initial="hidden"
       animate={controls}
-      exit="exit"
-      variants={variants}
+      style={{ scale: spring }}
+      onClick={() => spring(1.5)}
     >
-      Контент
+      <button onClick={fadeIn}>Показать</button>
+      <button onClick={fadeOut}>Скрыть</button>
     </motion.div>
   );
-};
+}
 ```
 
 ## 📚 Доступные хуки
 
 ### useFade
 
-Хук для создания анимаций появления/исчезновения с различными эффектами.
+Хук для создания плавных анимаций появления/исчезновения.
 
-#### Примеры использования
-
-##### Базовое использование
 ```tsx
-const { variants, controls } = useFade();
-
-return (
-  <motion.div
-    initial="hidden"
-    animate={controls}
-    exit="exit"
-    variants={variants}
-  >
-    Контент
-  </motion.div>
-);
-```
-
-##### Анимация с направлением
-```tsx
-const { variants, controls } = useFade({
-  direction: 'up',
-  distance: 50,
+const { fadeIn, fadeOut, controls } = useFade({
+  duration: 0.5,
+  opacity: 0.5,
+  delay: 0.2
 });
 
 return (
-  <motion.div
-    initial="hidden"
-    animate={controls}
-    exit="exit"
-    variants={variants}
-  >
-    Контент
+  <motion.div animate={controls}>
+    <button onClick={fadeIn}>Показать</button>
+    <button onClick={fadeOut}>Скрыть</button>
   </motion.div>
 );
 ```
 
-##### Анимация с эффектом stagger
-```tsx
-const { variants, controls } = useFade({
-  stagger: {
-    each: 0.1,
-    from: 0,
-  },
-});
+#### Опции
 
-return (
-  <motion.div
-    initial="hidden"
-    animate={controls}
-    exit="exit"
-    variants={variants}
-  >
-    {items.map((item) => (
-      <motion.div key={item.id} variants={variants}>
-        {item.content}
-      </motion.div>
-    ))}
-  </motion.div>
-);
-```
-
-##### Адаптивная анимация
-```tsx
-const { variants, controls } = useFade({
-  responsive: {
-    mobile: { duration: 0.2 },
-    tablet: { duration: 0.3 },
-    desktop: { duration: 0.4 },
-  },
-});
-
-return (
-  <motion.div
-    initial="hidden"
-    animate={controls}
-    exit="exit"
-    variants={variants}
-  >
-    Контент
-  </motion.div>
-);
-```
-
-#### Опции хука
-
-| Опция | Тип | По умолчанию | Описание |
-|--------|------|---------|-------------|
+| Параметр | Тип | По умолчанию | Описание |
+|----------|-----|--------------|-----------|
 | duration | number | 0.5 | Длительность анимации в секундах |
+| opacity | number | 0.5 | Значение прозрачности (0-1) |
 | delay | number | 0 | Задержка перед началом анимации |
-| initialOpacity | number | 0 | Начальное значение прозрачности |
-| finalOpacity | number | 1 | Конечное значение прозрачности |
-| ease | string | 'easeInOut' | Функция плавности анимации |
-| direction | 'up' \| 'down' \| 'left' \| 'right' | - | Направление анимации |
-| distance | number | 50 | Расстояние для анимации по направлению |
-| stagger | number | 0.1 | Задержка между анимациями дочерних элементов |
-| responsive | object | - | Адаптивные настройки анимации |
-| variants | object | - | Кастомные варианты анимации |
-| fadeIn | object | - | Настройки для анимации появления |
-| fadeOut | object | - | Настройки для анимации исчезновения |
 
 #### Возвращаемые значения
 
-Хук возвращает объект со следующими свойствами:
+| Параметр | Тип | Описание |
+|----------|-----|-----------|
+| fadeIn | () => void | Функция для анимации появления |
+| fadeOut | () => void | Функция для анимации исчезновения |
+| controls | AnimationControls | Контролы анимации Framer Motion |
 
-- `variants`: Варианты анимации для Framer Motion
-- `controls`: Контролы анимации для ручного управления
-- `fadeIn`: Функция для запуска анимации появления
-- `fadeOut`: Функция для запуска анимации исчезновения
-- `stop`: Функция для остановки текущей анимации
+### useSpring
 
-## 🤝 Участие в разработке
+Хук для создания пружинных анимаций с настраиваемыми параметрами.
 
-Мы приветствуем ваш вклад! Пожалуйста, не стесняйтесь отправлять Pull Request.
+```tsx
+const { spring, controls, stop } = useSpring({
+  stiffness: 100,
+  damping: 10,
+  mass: 1
+});
+
+return (
+  <motion.div animate={controls}>
+    <button onClick={() => spring(1.5)}>Увеличить</button>
+    <button onClick={() => spring(0.5)}>Уменьшить</button>
+    <button onClick={stop}>Остановить</button>
+  </motion.div>
+);
+```
+
+#### Опции
+
+| Параметр | Тип | По умолчанию | Описание |
+|----------|-----|--------------|-----------|
+| stiffness | number | 100 | Жесткость пружины |
+| damping | number | 10 | Затухание |
+| mass | number | 1 | Масса |
+| velocity | number | 0 | Начальная скорость |
+| restDelta | number | 0.01 | Порог останова по расстоянию |
+| restSpeed | number | 0.01 | Порог останова по скорости |
+| bounce | number | 0.25 | Коэффициент отскока |
+| tension | number | 300 | Натяжение |
+| friction | number | 30 | Трение |
+| velocityThreshold | number | 0.001 | Порог скорости |
+| distanceThreshold | number | 0.001 | Порог расстояния |
+
+#### Возвращаемые значения
+
+| Параметр | Тип | Описание |
+|----------|-----|-----------|
+| spring | (target: number) => Promise<void> | Функция для анимации к целевому значению |
+| stop | () => void | Функция для остановки анимации |
+| controls | AnimationControls | Контролы анимации Framer Motion |
+| value | number | Текущее значение анимации |
+
+## 🤝 Вклад в проект
+
+Мы приветствуем ваш вклад! Пожалуйста, создавайте pull request'ы и описывайте предлагаемые изменения.
 
 ## 📝 Лицензия
 
 MIT
 
-## 📞 Поддержка
+## 💪 Поддержка
 
-Если у вас возникли вопросы или проблемы, пожалуйста, создайте issue в репозитории проекта. 
+Если у вас есть вопросы или проблемы, пожалуйста, создавайте issue в репозитории. 
